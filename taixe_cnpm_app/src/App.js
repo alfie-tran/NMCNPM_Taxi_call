@@ -1,21 +1,22 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import DriverInfo from './components/DriverInfoScreen';
+import DriverInfo from './components/BookingInfoScreen';
+import axios from 'axios';
 
-function App() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch('http://localhost:5000/api/data')
-      .then(response => response.json())
-      .then(data => setData(data));
-  }, []);
-
+const App = () => {
   return (
-    <div>
-      <h1>Xin chào các bạn</h1>
-      <p>{data ? data.message : '21880291_21880273_21810052_22880138'}</p>
-    </div>
+    <Router>
+      <div>
+        <h1>Xin chào các bạn</h1>
+        <Switch>
+          <Route path="/driver" component={DriverInfoScreen} />
+          <Route path="/booking" component={BookingInfoScreen} />
+        </Switch>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
