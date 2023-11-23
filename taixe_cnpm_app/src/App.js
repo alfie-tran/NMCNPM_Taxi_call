@@ -15,13 +15,13 @@ const App = () => {
         <nav>
           <ul>
             <li>
-              <Link to="/driver">Driver</Link>
+              <Link to="/driver">Tài xế</Link>
             </li>
             <li>
-              <Link to="/booking">Booking</Link>
+              <Link to="/booking">Lịch sử chuyến đi</Link>
             </li>
             <li>
-              <Link to="/find">Finding</Link>
+              <Link to="/find">Tìm khách hàng</Link>
             </li>
           </ul>
         </nav>

@@ -25,7 +25,7 @@ const BookingInfoScreen = () => {
 
   return (
     <div>
-      <h1>Booking Information</h1>
+      <h1>Màn hình lịch sử chuyến đi</h1>
 
       {bookingError ? (
         <p>Error fetching booking data. Please try again later.</p>

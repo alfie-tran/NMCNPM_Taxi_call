@@ -25,7 +25,7 @@ const DriverInfoScreen = () => {
 
   return (
     <div>
-      <h1>Driver Information</h1>
+      <h1>Màn hình thông tin tài xế</h1>
 
       {driverError ? (
         <p>Error fetching driver data. Please try again later.</p>

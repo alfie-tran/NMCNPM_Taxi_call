@@ -11,6 +11,7 @@ const RideLists = ({ rides, onRideSelect }) => {
             <div>
               <h3>{ride.destination}</h3>
               <p>Khoảng cách: {ride.distance} km</p>
+              <p>Điểm đến: {ride.customerDestination}</p>
               <button onClick={() => onRideSelect(ride)}>Nhận chuyến đi</button>
             </div>
           </li>
