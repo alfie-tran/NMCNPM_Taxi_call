@@ -1,16 +1,33 @@
 // FindRide.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RideList from './RideLists';
 import RideDetails from './RideDetails';
 import PickupScreen from './PickupScreen';
-import CompletedRideScreen from './CompletedRideScreen';
+import ProgressRideScreen from './ProgressRideScreen';
 
 const FindRide = () => {
   const [rides, setRides] = useState([]); // Danh sách chuyến đi
   const [selectedRide, setSelectedRide] = useState(null); // Chuyến đi được chọn
   const [pickupConfirmed, setPickupConfirmed] = useState(false); // Trạng thái xác nhận đã đón
+  const [rideProgress, setRideProgress] = useState(false); // Trạng thái chuyến đi đang tiến hành
   const [rideCompleted, setRideCompleted] = useState(false); // Trạng thái chuyến đi đã hoàn thành
+  const [estimatedTime, setEstimatedTime] = useState(0);
+  const [estimatedCost, setEstimatedCost] = useState(0);
 
+  useEffect(() => {
+    // Tính toán estimatedTime và estimatedCost khi selectedRide thay đổi
+    if (selectedRide) {
+      const timePerKm = 5; // Giả sử mỗi km mất 5 phút (cần điều chỉnh theo yêu cầu thực tế)
+      const costPerKm = 10000; // Giả sử giá cả là 10,000 VND/km (cần điều chỉnh theo yêu cầu thực tế)
+      const { distance } = selectedRide;
+
+      const newEstimatedTime = distance * timePerKm;
+      const newEstimatedCost = distance * costPerKm;
+
+      setEstimatedTime(newEstimatedTime);
+      setEstimatedCost(newEstimatedCost);
+    }
+  }, [selectedRide]);
 
   const handleFindRide = () => {
     // Simulate fetching ride data from an API
@@ -27,13 +44,14 @@ const FindRide = () => {
     // Handle logic when a ride is selected
     setSelectedRide(selectedRide);
     setPickupConfirmed(false); // Reset the pickup confirmation status
-    setRideCompleted(false); // Reset the ride completion status
+    // setRideCompleted(false); // Reset the ride completion status
+    
   };
 
   const handleConfirmPickup = () => {
     // Handle logic when the driver confirms pickup
     setPickupConfirmed(true);
-    // setRideCompleted(false); // Reset the ride completion status
+    setRideProgress(true); // Reset the ride completion status
   };
 
   const handleCancelRide = () => {
@@ -41,6 +59,7 @@ const FindRide = () => {
     setSelectedRide(null);
     setPickupConfirmed(false);
     setRideCompleted(false);
+    setRideProgress(false);
   };
 
   const handleViewMap = () => {
@@ -48,10 +67,6 @@ const FindRide = () => {
     console.log('View map');
   };
 
-  const handleConfirmCompleted = () => {
-    // Handle logic when the driver confirms that the ride is completed
-    setRideCompleted(true);
-  };
 
   return (
     <div>
@@ -62,7 +77,7 @@ const FindRide = () => {
       
       {rides.length > 0 && !selectedRide && <RideList rides={rides} onRideSelect={handleRideSelect} />}
 
-      {selectedRide && !pickupConfirmed && !rideCompleted && (
+      {selectedRide && !pickupConfirmed && (
         <RideDetails
           ride={selectedRide}
           onConfirmPickup={handleConfirmPickup}
@@ -71,7 +86,7 @@ const FindRide = () => {
         />
       )}
 
-      {selectedRide && pickupConfirmed && !rideCompleted && (
+      {selectedRide && pickupConfirmed && !rideCompleted && !rideProgress && (
         <PickupScreen
           ride={selectedRide}
           onConfirmPickup={handleConfirmPickup}
@@ -79,13 +94,13 @@ const FindRide = () => {
         />
       )}
 
-      {selectedRide && (pickupConfirmed || rideCompleted) && (
-        <CompletedRideScreen
+      {selectedRide && (pickupConfirmed || rideCompleted) && rideProgress && (
+        <ProgressRideScreen
           ride={selectedRide}
-          onConfirmCompleted={handleConfirmCompleted}
+          estimatedTime={estimatedTime}
+          estimatedCost={estimatedCost}
         />
       )}
-
     </div>
   );
 };
