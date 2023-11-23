@@ -1,9 +1,12 @@
 // FindRide.js
 import React, { useState } from 'react';
 import RideList from './RideLists';
+import RideDetails from './RideDetails';
 
 const FindRide = () => {
   const [rides, setRides] = useState([]); // Danh sách chuyến đi
+  const [selectedRide, setSelectedRide] = useState(null); // Chuyến đi được chọn
+
 
   const handleFindRide = () => {
     // Simulate fetching ride data from an API
@@ -18,8 +21,24 @@ const FindRide = () => {
 
   const handleRideSelect = (selectedRide) => {
     // Handle logic when a ride is selected
-    console.log(`Ride selected: ${selectedRide.destination}`);
+    setSelectedRide(selectedRide);
   };
+
+  const handleConfirmPickup = () => {
+    // Handle logic when the driver confirms pickup
+    console.log('Pickup confirmed');
+  };
+
+  const handleCancelRide = () => {
+    // Handle logic when the driver cancels the ride
+    console.log('Ride canceled');
+  };
+
+  const handleViewMap = () => {
+    // Handle logic to view the map for the selected ride
+    console.log('View map');
+  };
+
 
   return (
     <div>
@@ -27,8 +46,18 @@ const FindRide = () => {
       <p>Thông tin chuyến đi khách đặt tại đây..</p>
       
       <button onClick={handleFindRide}>Tìm chuyến đi</button>
+      
+      {rides.length > 0 && !selectedRide && <RideList rides={rides} onRideSelect={handleRideSelect} />}
 
-      {rides.length > 0 && <RideList rides={rides} onRideSelect={handleRideSelect} />}
+      {selectedRide && (
+        <RideDetails
+          ride={selectedRide}
+          onConfirmPickup={handleConfirmPickup}
+          onCancelRide={handleCancelRide}
+          onViewMap={handleViewMap}
+        />
+      )}
+
     </div>
   );
 };
