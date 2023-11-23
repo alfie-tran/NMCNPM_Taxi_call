@@ -12,9 +12,9 @@ const RideDetails = ({ ride, onConfirmPickup, onCancelRide, onViewMap }) => {
         {/* Add more ride details as needed */}
       </div>
 
-      <button onClick={onConfirmPickup}>Confirm Pickup</button>
-      <button onClick={onCancelRide}>Cancel Ride</button>
-      <button onClick={onViewMap}>View Map</button>
+      <button onClick={onConfirmPickup}>Chọn chuyến đi này</button>
+      <button onClick={onCancelRide}>Quay về danh sách</button>
+      <button onClick={onViewMap}>Xem bản đồ</button>
     </div>
   );
 };

@@ -9,7 +9,7 @@ const RideLists = ({ rides, onRideSelect }) => {
         {rides.map((ride) => (
           <li key={ride.id}>
             <div>
-              <h3>{ride.destination}</h3>
+              <p>{ride.destination}</p>
               <p>Khoảng cách: {ride.distance} km</p>
               <p>Điểm đến: {ride.customerDestination}</p>
               <button onClick={() => onRideSelect(ride)}>Nhận chuyến đi</button>

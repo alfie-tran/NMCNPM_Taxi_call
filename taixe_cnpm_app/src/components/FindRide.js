@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import RideList from './RideLists';
 import RideDetails from './RideDetails';
 import PickupScreen from './PickupScreen';
+import CompletedRideScreen from './CompletedRideScreen';
 
 const FindRide = () => {
   const [rides, setRides] = useState([]); // Danh sách chuyến đi
   const [selectedRide, setSelectedRide] = useState(null); // Chuyến đi được chọn
   const [pickupConfirmed, setPickupConfirmed] = useState(false); // Trạng thái xác nhận đã đón
+  const [rideCompleted, setRideCompleted] = useState(false); // Trạng thái chuyến đi đã hoàn thành
 
 
   const handleFindRide = () => {
@@ -25,17 +27,20 @@ const FindRide = () => {
     // Handle logic when a ride is selected
     setSelectedRide(selectedRide);
     setPickupConfirmed(false); // Reset the pickup confirmation status
+    setRideCompleted(false); // Reset the ride completion status
   };
 
   const handleConfirmPickup = () => {
     // Handle logic when the driver confirms pickup
     setPickupConfirmed(true);
+    // setRideCompleted(false); // Reset the ride completion status
   };
 
   const handleCancelRide = () => {
     // Handle logic when the driver cancels the ride
     setSelectedRide(null);
     setPickupConfirmed(false);
+    setRideCompleted(false);
   };
 
   const handleViewMap = () => {
@@ -43,6 +48,10 @@ const FindRide = () => {
     console.log('View map');
   };
 
+  const handleConfirmCompleted = () => {
+    // Handle logic when the driver confirms that the ride is completed
+    setRideCompleted(true);
+  };
 
   return (
     <div>
@@ -53,7 +62,7 @@ const FindRide = () => {
       
       {rides.length > 0 && !selectedRide && <RideList rides={rides} onRideSelect={handleRideSelect} />}
 
-      {selectedRide && !pickupConfirmed && (
+      {selectedRide && !pickupConfirmed && !rideCompleted && (
         <RideDetails
           ride={selectedRide}
           onConfirmPickup={handleConfirmPickup}
@@ -62,11 +71,18 @@ const FindRide = () => {
         />
       )}
 
-      {selectedRide && pickupConfirmed && (
+      {selectedRide && pickupConfirmed && !rideCompleted && (
         <PickupScreen
           ride={selectedRide}
           onConfirmPickup={handleConfirmPickup}
           onCancelRide={handleCancelRide}
+        />
+      )}
+
+      {selectedRide && (pickupConfirmed || rideCompleted) && (
+        <CompletedRideScreen
+          ride={selectedRide}
+          onConfirmCompleted={handleConfirmCompleted}
         />
       )}
 
