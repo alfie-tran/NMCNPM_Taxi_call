@@ -1,0 +1,57 @@
+/* RideLists.css */
+/* Add styling for RideLists component here */
+
+/* Example: */
+.rides-container {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.rides-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ride-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.ride-item:hover {
+  transform: scale(1.02);
+}
+
+.ride-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.destination {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.distance, .customer-destination {
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.select-button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.select-button:hover {
+  background-color: #45a049;
+}
