@@ -21,13 +21,13 @@ const ProgressRideScreen = ({ ride, onConfirmProgress }) => {
 
   return (
     <div>
-      <h1>Màn hình chở khách</h1>
+      <h2>Màn hình chở khách</h2>
       <p><strong>Điểm đón:</strong> {destination}</p>
       <p><strong>Điểm đến:</strong> {customerDestination}</p>
       <p><strong>Thời gian ước lượng:</strong> {estimatedTime} phút</p>
       <p><strong>Số tiền ước lượng:</strong> {estimatedCost} VND</p>
 
-      <button onClick={onConfirmProgress}>ok</button>
+      <button onClick={onConfirmProgress}>Hoành thành chuyến đi</button>
     </div>
   );
 };

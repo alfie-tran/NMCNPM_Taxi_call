@@ -15,6 +15,8 @@ const FindRide = () => {
   const [estimatedTime, setEstimatedTime] = useState(0);
   const [estimatedCost, setEstimatedCost] = useState(0);
 
+  const [shouldReturnToRideList, setShouldReturnToRideList] = useState(false); // Trạng thái quay lại màn hình RideList
+
   useEffect(() => {
     // Tính toán estimatedTime và estimatedCost khi selectedRide thay đổi
     if (selectedRide) {
@@ -69,6 +71,16 @@ const FindRide = () => {
     console.log('View map');
   };
 
+  const handleReturnToRideList = () => {
+    // Xử lý khi cần quay lại màn hình RideList
+     // Đặt lại tất cả các trạng thái liên quan đến chuyến đi đã hoàn thành
+    setSelectedRide(null);
+    setPickupConfirmed(false);
+    setRideCompleted(false);
+    setRideProgress(false);
+    setShouldReturnToRideList(false); // Đặt lại cờ chỉ định quay lại RideList
+  };
+
   return (
     <div>
       <h1>Màn hình tìm khách hàng</h1>
@@ -76,7 +88,13 @@ const FindRide = () => {
       
       <button onClick={handleFindRide}>Tìm chuyến đi</button>
       
-      {rides.length > 0 && !selectedRide && <RideList rides={rides} onRideSelect={handleRideSelect} />}
+      {rides.length > 0 && !selectedRide && !shouldReturnToRideList && (
+        <RideList rides={rides} onRideSelect={handleRideSelect} />
+      )}
+
+      {shouldReturnToRideList && (
+        <RideList rides={rides} onRideSelect={handleRideSelect} />
+      )}
 
       {selectedRide && !pickupConfirmed && (
         <RideDetails
@@ -98,7 +116,7 @@ const FindRide = () => {
       {selectedRide && rideProgress && !rideCompleted && (
         <ProgressRideScreen
           ride={selectedRide}
-          onConfirmPickup={handleConfirmCompleted} // Nếu muốn xác nhận đã hoàn thành khi tiến hành thì sửa lại đây
+          onConfirmProgress={handleConfirmCompleted} // xác nhận progress khi đón thì sửa lại đây
           estimatedTime={estimatedTime}
           estimatedCost={estimatedCost}
         />
@@ -107,11 +125,13 @@ const FindRide = () => {
       {selectedRide && rideCompleted && (
         <CompletedRideScreen
           ride={selectedRide}
-          onConfirmPickup={handleConfirmCompleted}
+          onConfirmCompleted={handleConfirmCompleted}
+          onReturnToRideList={handleReturnToRideList} // Truyền hàm xử lý quay lại màn hình RideList
           estimatedTime={estimatedTime}
           estimatedCost={estimatedCost}
         />
       )}
+
     </div>
   );
 };
