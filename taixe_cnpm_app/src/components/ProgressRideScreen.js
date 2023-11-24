@@ -1,7 +1,7 @@
 // ProgressRideScreen.js
 import React from 'react';
 
-const ProgressRideScreen = ({ ride }) => {
+const ProgressRideScreen = ({ ride, onConfirmProgress }) => {
   const { destination, customerDestination, distance } = ride;
 
   const calculateEstimatedTime = () => {
@@ -27,7 +27,7 @@ const ProgressRideScreen = ({ ride }) => {
       <p><strong>Thời gian ước lượng:</strong> {estimatedTime} phút</p>
       <p><strong>Số tiền ước lượng:</strong> {estimatedCost} VND</p>
 
-      {/* Add any additional information or UI elements as needed */}
+      <button onClick={onConfirmProgress}>ok</button>
     </div>
   );
 };
